@@ -1,15 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from './App';
-import { DataProvider } from './components';
-import './index.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import { App } from "./App";
+import { DataProvider } from "./components";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <DataProvider>
-      <App />
-    </DataProvider>
+    <Router>
+      <DataProvider>
+        <App />
+      </DataProvider>
+    </Router>
   </React.StrictMode>
 );

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const API_URL = "https://rickandmortyapi.com/api/character/";
 
@@ -10,6 +11,9 @@ export function DataProvider({ children }) {
   const [isError, setIsError] = useState(false);
   const [info, setInfo] = useState({});
   const [apiURL, setApiURL] = useState(API_URL);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const fetchData = async (url) => {
     setIsFetching(true);
@@ -30,12 +34,12 @@ export function DataProvider({ children }) {
   };
 
   useEffect(() => {
-    fetchData(apiURL);
-  }, [apiURL]);
+    fetchData(apiURL + location.search);
+  }, [location.search]);
 
   const updateFilters = (filters) => {
     const query = new URLSearchParams(filters).toString();
-    setApiURL(`${API_URL}?${query}`);
+    navigate(`?${query}`);
   };
 
   const dataValue = useMemo(

@@ -35,12 +35,42 @@ export function Filter() {
     setOpenFilter(false);
   };
 
+  const handleRefreshFilters = () => {
+    setFilters({
+      name: "",
+      status: "",
+      species: "",
+      type: "",
+      gender: "",
+    });
+    updateFilters({});
+    setOpenFilter(false);
+  };
+
+  const filterLabels = {
+    name: "Имени",
+    status: "Статусу",
+    species: "Виду",
+    type: "Типу",
+    gender: "Полу",
+  };
+
+  const getSelectedFilters = () => {
+    const selected = [];
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) {
+        selected.push(`${filterLabels[key]}`);
+      }
+    }
+    return selected.length > 0 ? selected.join(" ,") : "Нет выбранных фильтров";
+  };
+
   return (
     <FilterContainer ref={filterRef}>
       <FilterLabel>
         <FilterText>Фильтрация по:</FilterText>
         <FilterSpan onClick={() => setOpenFilter(!openFilter)}>
-          имени
+          {getSelectedFilters()}
         </FilterSpan>
       </FilterLabel>
       {openFilter && (
@@ -75,9 +105,12 @@ export function Filter() {
             placeholder="Пол"
             onChange={handleChange}
           />
-          <FilterButton onClick={handleApplyFilters}>
+          <ApplyButton onClick={handleApplyFilters}>
             Применить фильтры
-          </FilterButton>
+          </ApplyButton>
+          <RefreshButton onClick={handleRefreshFilters}>
+            Сбросить фильтры
+          </RefreshButton>
         </FilterPopup>
       )}
     </FilterContainer>
@@ -101,6 +134,10 @@ const FilterText = styled.b`
 const FilterSpan = styled.span`
   color: rgb(131, 191, 70);
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  :hover {
+    transform: translateY(-5px);
+  }
 `;
 
 const FilterPopup = styled.div`
@@ -126,13 +163,20 @@ const FilterInput = styled.input`
   background-color: rgb(68, 59, 80);
   color: rgb(131, 191, 70);
   border-radius: 4px;
+  ::placeholder {
+    color: #bdbbc0;
+  }
 `;
 
-const FilterButton = styled.button`
+const ApplyButton = styled.button`
   font-size: 14px;
   margin-top: 10px;
   padding: 10px 20px;
   margin: 0 10px;
   border-radius: 8px;
   background-color: rgb(131, 191, 70);
+`;
+
+const RefreshButton = styled(ApplyButton)`
+  background-color: #ff6666;
 `;
