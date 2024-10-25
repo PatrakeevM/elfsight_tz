@@ -18,7 +18,7 @@ export function Pagination() {
 
       URLWithPage.searchParams.set('page', i + 1);
 
-      return URLWithPage;
+      return URLWithPage.toString();
     });
 
     setPages(createdPages);

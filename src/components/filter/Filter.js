@@ -43,7 +43,13 @@ export function Filter() {
       type: "",
       gender: "",
     });
-    updateFilters({});
+    updateFilters({
+      name: "",
+      status: "",
+      species: "",
+      type: "",
+      gender: "",
+    });
     setOpenFilter(false);
   };
 

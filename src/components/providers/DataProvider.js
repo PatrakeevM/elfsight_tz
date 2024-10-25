@@ -38,8 +38,14 @@ export function DataProvider({ children }) {
   }, [location.search]);
 
   const updateFilters = (filters) => {
-    const query = new URLSearchParams(filters).toString();
-    navigate(`?${query}`);
+    const params = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) {
+        params.set(key, value);
+      }
+    }
+    navigate(`?${params.toString()}`);
   };
 
   const dataValue = useMemo(
@@ -52,7 +58,7 @@ export function DataProvider({ children }) {
       isFetching,
       isError,
       info,
-      updateFilters
+      updateFilters,
     }),
     [activePage, apiURL, characters, isFetching, isError, info]
   );
